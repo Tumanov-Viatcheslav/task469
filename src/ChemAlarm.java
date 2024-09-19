@@ -95,7 +95,6 @@ public class ChemAlarm {
 
     private static int shortestPath(int[][] matrix) {
         IntWithFlag[][] fillMatrix = new IntWithFlag[matrix.length][matrix[0].length];
-        int[][] debugMatrix = new int[matrix.length][matrix[0].length];
         Pair<Pair<Integer>> step;
         Stack<Pair<Pair<Integer>>> toCheck = new Stack<>();
 
@@ -111,12 +110,10 @@ public class ChemAlarm {
             step = toCheck.pop();
             if (!fillMatrix[step.o2.o1][step.o2.o2].valueSet) {
                 fillMatrix[step.o2.o1][step.o2.o2].setValue(fillMatrix[step.o1.o1][step.o1.o2].value + matrix[step.o2.o1][step.o2.o2]);
-                debugMatrix[step.o2.o1][step.o2.o2] = fillMatrix[step.o1.o1][step.o1.o2].value + matrix[step.o2.o1][step.o2.o2];
                 addNeighbours(toCheck, step.o2.o1, step.o2.o2, fillMatrix.length - 1, fillMatrix[0].length - 1);
             }
             else if (fillMatrix[step.o2.o1][step.o2.o2].valueSet && fillMatrix[step.o1.o1][step.o1.o2].value < fillMatrix[step.o2.o1][step.o2.o2].value) {
                 fillMatrix[step.o2.o1][step.o2.o2].setValue(fillMatrix[step.o1.o1][step.o1.o2].value + matrix[step.o2.o1][step.o2.o2]);
-                debugMatrix[step.o2.o1][step.o2.o2] = fillMatrix[step.o1.o1][step.o1.o2].value + matrix[step.o2.o1][step.o2.o2];
                 addNeighbours(toCheck, step.o2.o1, step.o2.o2, fillMatrix.length - 1, fillMatrix[0].length - 1);
             }
         }
